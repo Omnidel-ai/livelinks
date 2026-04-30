@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import LLLBoard from "@/app/_components/lll-board";
+import SayaniChat from "@/app/_components/sayani-chat";
 import type { Category, LinkRow, LinkView } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -41,10 +42,13 @@ export default async function Home() {
   }));
 
   return (
-    <LLLBoard
-      categories={categoryNames}
-      links={linkViews}
-      userEmail={null}
-    />
+    <>
+      <LLLBoard
+        categories={categoryNames}
+        links={linkViews}
+        userEmail={null}
+      />
+      <SayaniChat />
+    </>
   );
 }

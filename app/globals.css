@@ -448,3 +448,235 @@ textarea.lll-input {
   resize: vertical;
   min-height: 50px;
 }
+
+/* ---------- Sayani Chat ---------- */
+
+.sayani-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(31, 26, 20, 0.3);
+  transition: all 200ms ease;
+  z-index: 40;
+}
+.sayani-fab:hover {
+  background: var(--saffron-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(31, 26, 20, 0.35);
+}
+
+.sayani-drawer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  height: 560px;
+  max-height: calc(100vh - 48px);
+  background: var(--paper);
+  border: 1px solid var(--paper-line);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px -12px rgba(31, 26, 20, 0.35);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  animation: sayaniIn 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+@keyframes sayaniIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sayani-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--paper-line);
+  flex-shrink: 0;
+}
+.sayani-name {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.sayani-subtitle {
+  font-family: var(--font-newsreader), serif;
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.sayani-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sayani-welcome {
+  text-align: center;
+  padding: 20px 8px;
+  font-family: var(--font-newsreader), serif;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.sayani-welcome-title {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.sayani-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+}
+.sayani-suggestion {
+  font-family: var(--font-newsreader), serif;
+  font-size: 13px;
+  color: var(--saffron);
+  background: rgba(200, 101, 30, 0.06);
+  border: 1px solid rgba(200, 101, 30, 0.15);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  text-align: left;
+}
+.sayani-suggestion:hover {
+  background: rgba(200, 101, 30, 0.12);
+  border-color: var(--saffron);
+}
+
+.sayani-msg {
+  display: flex;
+}
+.sayani-msg-user {
+  justify-content: flex-end;
+}
+.sayani-msg-assistant {
+  justify-content: flex-start;
+}
+.sayani-msg-content {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-family: var(--font-newsreader), serif;
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.sayani-msg-user .sayani-msg-content {
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom-right-radius: 4px;
+}
+.sayani-msg-assistant .sayani-msg-content {
+  background: var(--paper-deep);
+  color: var(--ink);
+  border: 1px solid var(--paper-line);
+  border-bottom-left-radius: 4px;
+}
+.sayani-msg-content strong {
+  font-weight: 600;
+}
+.sayani-link {
+  color: var(--saffron);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
+.sayani-link:hover {
+  color: var(--saffron-deep);
+}
+
+.sayani-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--paper-line);
+  flex-shrink: 0;
+  background: var(--paper);
+}
+.sayani-input {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  color: var(--ink);
+  font-family: var(--font-newsreader), serif;
+  font-size: 14px;
+  transition: all 200ms ease;
+}
+.sayani-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--paper);
+}
+.sayani-input::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.sayani-send {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  transition: all 150ms ease;
+  flex-shrink: 0;
+}
+.sayani-send:hover:not(:disabled) {
+  background: var(--saffron-deep);
+}
+.sayani-send:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .sayani-drawer {
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  .sayani-fab {
+    bottom: 16px;
+    right: 16px;
+  }
+}
