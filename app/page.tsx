@@ -6,6 +6,9 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const [{ data: categoriesData }, { data: linksData }] = await Promise.all([
     supabase
@@ -38,5 +41,11 @@ export default async function Home() {
     updatedAt: l.updated_at,
   }));
 
-  return <LLLBoard categories={categoryNames} links={linkViews} />;
+  return (
+    <LLLBoard
+      categories={categoryNames}
+      links={linkViews}
+      userEmail={user?.email ?? null}
+    />
+  );
 }

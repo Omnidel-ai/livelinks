@@ -29,6 +29,7 @@ import {
   upsertLink,
   type UpsertLinkInput,
 } from "@/app/_actions/links";
+import { signOut } from "@/app/_actions/auth";
 
 const SUBTYPE_SUGGESTIONS = [
   "playbook",
@@ -50,9 +51,10 @@ type View = "live" | "archive";
 type Props = {
   categories: string[];
   links: LinkView[];
+  userEmail: string | null;
 };
 
-export default function LLLBoard({ categories, links }: Props) {
+export default function LLLBoard({ categories, links, userEmail }: Props) {
   const [view, setView] = useState<View>("live");
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<LinkView | null>(null);
@@ -280,11 +282,28 @@ export default function LLLBoard({ categories, links }: Props) {
           </div>
         )}
 
-        <footer className="mt-24 pt-8 border-t paper-line text-center">
-          <p className="font-body italic text-ink-faint text-sm">
+        <footer className="mt-24 pt-8 border-t paper-line text-center font-body italic text-ink-faint text-sm">
+          <p>
             v1 · destination:{" "}
             <span className="text-ink-soft">vatika.live</span>
           </p>
+          {userEmail && (
+            <div className="mt-2 inline-flex items-center gap-2">
+              <span>
+                signed in as{" "}
+                <span className="not-italic text-ink-soft">{userEmail}</span>
+              </span>
+              <span className="dot-sep">·</span>
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className="not-italic underline underline-offset-2 hover:text-ink"
+                >
+                  sign out
+                </button>
+              </form>
+            </div>
+          )}
         </footer>
       </main>
 
