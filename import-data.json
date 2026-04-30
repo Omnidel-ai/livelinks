@@ -1,0 +1,777 @@
+{
+  "categories": [
+    "omnidel.ai",
+    "vatika.ai",
+    "Rangamati",
+    "RARE India",
+    "Goa Vatika",
+    "Portfolios",
+    "Docs",
+    "Fin Models",
+    "DPGP",
+    "Demos",
+    "Kaarigar"
+  ],
+  "links": [
+    {
+      "title": "Arjun Acharya App",
+      "url": "https://arjun-acharya-app.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "Arjun Acharya conversational agent",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL App",
+      "url": "https://omnidel-app.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "OmniDEL production app",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Dev",
+      "url": "https://omnidel-dev.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "OmniDEL development environment",
+      "status": "live"
+    },
+    {
+      "title": "Kaarigar Payments Dashboard",
+      "url": "https://karigar-payments-dashboard.vercel.app",
+      "category": "Kaarigar",
+      "subType": "dashboard",
+      "note": "Kaarigar payment tracking dashboard",
+      "status": "live"
+    },
+    {
+      "title": "RAAG Rate Platform",
+      "url": "https://raag-ten.vercel.app",
+      "category": "RARE India",
+      "subType": "app",
+      "note": "RARE India rate management platform",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Investor Deck",
+      "url": "https://web-zeta-green-33.vercel.app",
+      "category": "Fin Models",
+      "subType": "deck",
+      "note": "OmniDEL investor pitch deck",
+      "status": "live"
+    },
+    {
+      "title": "Module Pricing Calculator",
+      "url": "https://module-pricing.vercel.app",
+      "category": "vatika.ai",
+      "subType": "tool",
+      "note": "Modular garden pricing calculator (MGPC)",
+      "status": "live"
+    },
+    {
+      "title": "KarmYog Vatika Site",
+      "url": "https://site-lake-pi-11.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "KarmYog Vatika website",
+      "status": "live"
+    },
+    {
+      "title": "Abhishek Acharya App",
+      "url": "https://abhishek-acharya-app.vercel.app",
+      "category": "Kaarigar",
+      "subType": "app",
+      "note": "Abhishek trilingual Kaarigar training agent",
+      "status": "live"
+    },
+    {
+      "title": "Media Genie 2",
+      "url": "https://media-genie-2.vercel.app",
+      "category": "vatika.ai",
+      "subType": "app",
+      "note": "Media Genie AI v2 — image management",
+      "status": "live"
+    },
+    {
+      "title": "Media Genie AI",
+      "url": "https://media-genie-ai.vercel.app",
+      "category": "vatika.ai",
+      "subType": "app",
+      "note": "AI image management and portfolio generator",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Work OS",
+      "url": "https://app-one-xi-52.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "OmniDEL Work OS main app",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL About",
+      "url": "https://omnidel-about.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "site",
+      "note": "OmniDEL about/landing page",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Website",
+      "url": "https://website-ram-badrinathans-projects.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "site",
+      "note": "OmniDEL corporate website",
+      "status": "live"
+    },
+    {
+      "title": "Assagao Vatika Deck",
+      "url": "https://assagao-vatika-deck.vercel.app",
+      "category": "Goa Vatika",
+      "subType": "deck",
+      "note": "Assagao Vatika investor deck",
+      "status": "live"
+    },
+    {
+      "title": "Goa Vatika Playbook (EUR)",
+      "url": "https://goa-vatika-playbook-eur.vercel.app",
+      "category": "Goa Vatika",
+      "subType": "playbook",
+      "note": "Goa Vatika playbook — Euro version",
+      "status": "live"
+    },
+    {
+      "title": "KarmYog Vatika Credentials (Dist)",
+      "url": "https://dist-two-xi-53.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "KarmYog credentials distribution build",
+      "status": "live"
+    },
+    {
+      "title": "Goa Vatika Playbook",
+      "url": "https://goa-vatika-playbook.vercel.app",
+      "category": "Goa Vatika",
+      "subType": "playbook",
+      "note": "Goa Vatika investor playbook (INR)",
+      "status": "live"
+    },
+    {
+      "title": "Chota Arjun Review",
+      "url": "https://chota-arjun-review.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "Chota Arjun supervisor review interface",
+      "status": "live"
+    },
+    {
+      "title": "Vatika Training",
+      "url": "https://vatika-training.vercel.app",
+      "category": "vatika.ai",
+      "subType": "app",
+      "note": "Vatika team training platform",
+      "status": "live"
+    },
+    {
+      "title": "Shoba Chat",
+      "url": "https://shoba-chat.vercel.app",
+      "category": "Portfolios",
+      "subType": "app",
+      "note": "Shobhana personal chat agent",
+      "status": "live"
+    },
+    {
+      "title": "Priya Voice Library",
+      "url": "https://priya-voice-library.vercel.app",
+      "category": "vatika.ai",
+      "subType": "tool",
+      "note": "Priya voice sample library",
+      "status": "live"
+    },
+    {
+      "title": "RangaMati Vatika Donors",
+      "url": "https://rangamati-vatika-donors.vercel.app",
+      "category": "Rangamati",
+      "subType": "app",
+      "note": "RangaMati donor management portal",
+      "status": "live"
+    },
+    {
+      "title": "Abhishek Acharya (Managed Agents)",
+      "url": "https://abhishek-acharya-ccmanaged.vercel.app",
+      "category": "Kaarigar",
+      "subType": "app",
+      "note": "Abhishek via Claude Code Managed Agents",
+      "status": "live"
+    },
+    {
+      "title": "Vishwa Bangla Disruptor",
+      "url": "https://vishwa-bangla-disruptor.vercel.app",
+      "category": "Demos",
+      "subType": "demo",
+      "note": "Vishwa Bangla disruptor presentation",
+      "status": "live"
+    },
+    {
+      "title": "Paritosh Tracker",
+      "url": "https://paritosh-tracker.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "dashboard",
+      "note": "Paritosh task/project tracker",
+      "status": "live"
+    },
+    {
+      "title": "Goa Vatika Audit",
+      "url": "https://goa-vatika-audit.vercel.app",
+      "category": "Goa Vatika",
+      "subType": "tool",
+      "note": "Goa Vatika playbook audit report",
+      "status": "live"
+    },
+    {
+      "title": "Goa Vatika Test",
+      "url": "https://goa-vatika-test.vercel.app",
+      "category": "Goa Vatika",
+      "subType": "demo",
+      "note": "Goa Vatika test/staging site",
+      "status": "live"
+    },
+    {
+      "title": "Goa Vatika LLP",
+      "url": "https://goa-vatika-llp.vercel.app",
+      "category": "Goa Vatika",
+      "subType": "site",
+      "note": "Assagao Vatika LLP entity page",
+      "status": "live"
+    },
+    {
+      "title": "Goa Vatika QC",
+      "url": "https://goa-vatika-qc.vercel.app",
+      "category": "Goa Vatika",
+      "subType": "tool",
+      "note": "Goa Vatika quality control dashboard",
+      "status": "live"
+    },
+    {
+      "title": "RARE Hotel Datacentre",
+      "url": "https://rare-hotel-datacentre.vercel.app",
+      "category": "RARE India",
+      "subType": "dashboard",
+      "note": "RARE India hotel data centre",
+      "status": "live"
+    },
+    {
+      "title": "KarmYog Vatika Credentials",
+      "url": "https://karmyog-vatika-credentials.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "KarmYog Vatika Gardens credentials",
+      "status": "live"
+    },
+    {
+      "title": "KarmYog Credentials",
+      "url": "https://karmyog-credentials.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "KarmYog Group credentials",
+      "status": "live"
+    },
+    {
+      "title": "SAT Demo",
+      "url": "https://sat-demo-beta.vercel.app",
+      "category": "RARE India",
+      "subType": "demo",
+      "note": "SAT property agent demo",
+      "status": "live"
+    },
+    {
+      "title": "SAT Sunil Demo",
+      "url": "https://sat-sunil-demo.vercel.app",
+      "category": "RARE India",
+      "subType": "demo",
+      "note": "SAT agent demo for Sunil",
+      "status": "live"
+    },
+    {
+      "title": "Vatika Daily Log",
+      "url": "https://vatika-daily-log.vercel.app",
+      "category": "vatika.ai",
+      "subType": "dashboard",
+      "note": "Vatika daily operations log",
+      "status": "live"
+    },
+    {
+      "title": "Abhishek Kaarigar Saathi",
+      "url": "https://abhishek-kaarigar-saathi.vercel.app",
+      "category": "Kaarigar",
+      "subType": "app",
+      "note": "Original Kaarigar Saathi training agent (archived)",
+      "status": "live"
+    },
+    {
+      "title": "KarmYog Senior Living",
+      "url": "https://karmyog-senior-living.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "KarmYog senior living concept site",
+      "status": "live"
+    },
+    {
+      "title": "DPGP Pitch",
+      "url": "https://dpgp-pitch.vercel.app",
+      "category": "DPGP",
+      "subType": "deck",
+      "note": "DPGP investor pitch deck",
+      "status": "live"
+    },
+    {
+      "title": "DPGP Website",
+      "url": "https://www.dpgp.in",
+      "category": "DPGP",
+      "subType": "site",
+      "note": "DPGP official website",
+      "status": "live"
+    },
+    {
+      "title": "VQ Sentinel",
+      "url": "https://vq-sentinel.vercel.app",
+      "category": "vatika.ai",
+      "subType": "tool",
+      "note": "Vatika quality sentinel monitoring",
+      "status": "live"
+    },
+    {
+      "title": "OJ India Travelogue",
+      "url": "https://oj-india-travelogue.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "OJ India travelogue photo site",
+      "status": "live"
+    },
+    {
+      "title": "Sitla Estate Website",
+      "url": "https://sitla-estate-website.vercel.app",
+      "category": "RARE India",
+      "subType": "site",
+      "note": "Sitla Estate property website",
+      "status": "live"
+    },
+    {
+      "title": "Sitla Estate Visual",
+      "url": "https://sitla-estate-visual.vercel.app",
+      "category": "RARE India",
+      "subType": "site",
+      "note": "Sitla Estate visual presentation",
+      "status": "live"
+    },
+    {
+      "title": "Magic and the Mouse",
+      "url": "https://magic-and-the-mouse.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "Magic and the Mouse tribute site",
+      "status": "live"
+    },
+    {
+      "title": "Rosedale Vatika",
+      "url": "https://rosedale-vatika.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "Rosedale Vatika project site",
+      "status": "live"
+    },
+    {
+      "title": "OJ Travelogue Deploy",
+      "url": "https://oj-travelogue-deploy.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "OJ Travelogue alternate deployment",
+      "status": "live"
+    },
+    {
+      "title": "Snow Leopard Lodge",
+      "url": "https://snow-leopard-lodge.vercel.app",
+      "category": "RARE India",
+      "subType": "site",
+      "note": "Snow Leopard Lodge property site",
+      "status": "live"
+    },
+    {
+      "title": "Vatika AI",
+      "url": "https://vatika-ai.vercel.app",
+      "category": "vatika.ai",
+      "subType": "app",
+      "note": "Vatika AI platform",
+      "status": "live"
+    },
+    {
+      "title": "Vatika Demo Platform",
+      "url": "https://vatika-demo-platform.vercel.app",
+      "category": "vatika.ai",
+      "subType": "demo",
+      "note": "Vatika product demo platform",
+      "status": "live"
+    },
+    {
+      "title": "RangaMati Site",
+      "url": "https://rangamati-site.vercel.app",
+      "category": "Rangamati",
+      "subType": "site",
+      "note": "RangaMati Vatika public website",
+      "status": "live"
+    },
+    {
+      "title": "DaanSathi",
+      "url": "https://daansathi.vercel.app",
+      "category": "Rangamati",
+      "subType": "app",
+      "note": "DaanSathi donation platform for RangaMati",
+      "status": "live"
+    },
+    {
+      "title": "RangaMati Toolkit",
+      "url": "https://rangamati-toolkit.vercel.app",
+      "category": "Rangamati",
+      "subType": "tool",
+      "note": "RangaMati project management toolkit",
+      "status": "live"
+    },
+    {
+      "title": "NewTown Office Search",
+      "url": "https://newtown-office-search.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "tool",
+      "note": "NewTown Kolkata office space search",
+      "status": "live"
+    },
+    {
+      "title": "DeySarkar Tribute",
+      "url": "https://deysarkar-tribute.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "DeySarkar family tribute page",
+      "status": "live"
+    },
+    {
+      "title": "Patna Project Report",
+      "url": "https://patna-project-report.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "Patna nursery project report",
+      "status": "live"
+    },
+    {
+      "title": "Vatika Fresh",
+      "url": "https://vatika-fresh.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "Vatika Fresh produce concept",
+      "status": "live"
+    },
+    {
+      "title": "Docs Site",
+      "url": "https://docs-site-iota-pink.vercel.app",
+      "category": "Docs",
+      "subType": "site",
+      "note": "Documentation site",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL New Website",
+      "url": "https://new-website-delta-five.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "site",
+      "note": "OmniDEL new website iteration",
+      "status": "live"
+    },
+    {
+      "title": "Ops Dashboard",
+      "url": "https://ops.vatikadashboard.site",
+      "category": "vatika.ai",
+      "subType": "dashboard",
+      "note": "Vatika operations dashboard",
+      "status": "live"
+    },
+    {
+      "title": "RARE Hotelier Presentation",
+      "url": "https://rare-hotelier-presentation.vercel.app",
+      "category": "RARE India",
+      "subType": "deck",
+      "note": "RARE India hotelier partner presentation",
+      "status": "live"
+    },
+    {
+      "title": "Ads Playbook",
+      "url": "https://ads-playbook.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "playbook",
+      "note": "OmniDEL advertising playbook",
+      "status": "live"
+    },
+    {
+      "title": "Saurabh Thakur Vatika",
+      "url": "https://saurabh-thakur-vatika.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "Saurabh Thakur franchise vatika site",
+      "status": "live"
+    },
+    {
+      "title": "Saurabh Kumar Vatika",
+      "url": "https://saurabh-kumar-vatika.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "Saurabh Kumar franchise vatika site",
+      "status": "live"
+    },
+    {
+      "title": "ClockChat",
+      "url": "https://clockchat.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "ClockChat conversational agent",
+      "status": "live"
+    },
+    {
+      "title": "Kaam Ki Baat",
+      "url": "https://kaam-ki-baat.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "Kaam Ki Baat workforce engagement app",
+      "status": "live"
+    },
+    {
+      "title": "Biophilic Habitat Playbook",
+      "url": "https://biophilic-habitat-playbook.vercel.app",
+      "category": "vatika.ai",
+      "subType": "playbook",
+      "note": "Biophilic habitat design playbook",
+      "status": "live"
+    },
+    {
+      "title": "Kaam Ki Baat v2",
+      "url": "https://kaam-ki-baat-v2.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "Kaam Ki Baat v2 workforce app",
+      "status": "live"
+    },
+    {
+      "title": "Dharmic Supervisor",
+      "url": "https://dharmic-supervisor.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "app",
+      "note": "Dharmic supervisor daily tracker",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Playbook",
+      "url": "https://omnidel-playbook.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "playbook",
+      "note": "OmniDEL company playbook",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Playbook (Deploy)",
+      "url": "https://playbook-deploy.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "playbook",
+      "note": "OmniDEL playbook alternate deployment",
+      "status": "live"
+    },
+    {
+      "title": "KY Credentials",
+      "url": "https://ky-credentials.vercel.app",
+      "category": "Portfolios",
+      "subType": "site",
+      "note": "KarmYog abbreviated credentials",
+      "status": "live"
+    },
+    {
+      "title": "Sudhir Mehta RangaMati",
+      "url": "https://sudhir-mehta-rangamati.vercel.app",
+      "category": "Rangamati",
+      "subType": "deck",
+      "note": "RangaMati presentation for Sudhir Mehta",
+      "status": "live"
+    },
+    {
+      "title": "Ecosystem Site",
+      "url": "https://ecosystem-site.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "site",
+      "note": "OmniDEL ecosystem overview site",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL LMS Architecture",
+      "url": "https://omnidel-lms-architecture.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "site",
+      "note": "OmniDEL LMS architecture documentation",
+      "status": "live"
+    },
+    {
+      "title": "Boutique Stories",
+      "url": "https://boutiquestories.vercel.app",
+      "category": "RARE India",
+      "subType": "site",
+      "note": "RARE India boutique hotel stories",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Ad Platform",
+      "url": "https://omnidel-adplatform.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "demo",
+      "note": "OmniDEL ad platform demo",
+      "status": "live"
+    },
+    {
+      "title": "RARE Agent Demos",
+      "url": "https://rare-agent-demos.vercel.app",
+      "category": "RARE India",
+      "subType": "demo",
+      "note": "RARE India AI agent demos",
+      "status": "live"
+    },
+    {
+      "title": "RARE India Presentation",
+      "url": "https://rare-india-presentation.vercel.app",
+      "category": "RARE India",
+      "subType": "deck",
+      "note": "RARE India company presentation",
+      "status": "live"
+    },
+    {
+      "title": "OmniDEL Ad Journey",
+      "url": "https://omnidel-ad-journey.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "demo",
+      "note": "OmniDEL ad journey walkthrough",
+      "status": "live"
+    },
+    {
+      "title": "Kaarigar Workflow Demo",
+      "url": "https://kaarigar-workflow-demo.vercel.app",
+      "category": "Kaarigar",
+      "subType": "demo",
+      "note": "Kaarigar workflow demo",
+      "status": "live"
+    },
+    {
+      "title": "AC115 Infographic",
+      "url": "https://ac115-infographic.vercel.app",
+      "category": "Demos",
+      "subType": "demo",
+      "note": "AC115 constituency infographic",
+      "status": "live"
+    },
+    {
+      "title": "Sitla Agent Demo",
+      "url": "https://sitla-agent-demo.vercel.app",
+      "category": "RARE India",
+      "subType": "demo",
+      "note": "Sitla Estate AI concierge agent demo",
+      "status": "live"
+    },
+    {
+      "title": "Kaarigar Investor Demo",
+      "url": "https://kaarigar-investor-demo.vercel.app",
+      "category": "Kaarigar",
+      "subType": "demo",
+      "note": "Kaarigar investor demo walkthrough",
+      "status": "live"
+    },
+    {
+      "title": "Informal Workforce Report",
+      "url": "https://informal-workforce-report.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "site",
+      "note": "India informal workforce research report",
+      "status": "live"
+    },
+    {
+      "title": "WB Ministry Infographics",
+      "url": "https://wb-ministry-infographics.vercel.app",
+      "category": "Demos",
+      "subType": "demo",
+      "note": "West Bengal ministry infographics",
+      "status": "live"
+    },
+    {
+      "title": "Kaarigar Programmatic Roadmap",
+      "url": "https://kaarigar-programmatic-roadmap.vercel.app",
+      "category": "Kaarigar",
+      "subType": "deck",
+      "note": "Kaarigar product roadmap presentation",
+      "status": "live"
+    },
+    {
+      "title": "AI Skills Club Playbook",
+      "url": "https://ai-skills-club-playbook.vercel.app",
+      "category": "omnidel.ai",
+      "subType": "playbook",
+      "note": "AI Skills Club training playbook",
+      "status": "live"
+    },
+    {
+      "title": "AIM Response Deploy",
+      "url": "https://aim-response-deploy.vercel.app",
+      "category": "Demos",
+      "subType": "demo",
+      "note": "AIM response deployment",
+      "status": "live"
+    },
+    {
+      "title": "Kaarigar App (13 Mar 2026)",
+      "url": "https://kaarigar-app.vercel.app",
+      "category": "Kaarigar",
+      "subType": "app",
+      "note": "Kaarigar app build from 13 Mar 2026",
+      "status": "live"
+    },
+    {
+      "title": "Vatika Studio",
+      "url": "https://vatika-studio.vercel.app",
+      "category": "vatika.ai",
+      "subType": "app",
+      "note": "Vatika design studio tool",
+      "status": "live"
+    },
+    {
+      "title": "Vatika Investor Site",
+      "url": "https://vatika-investor-site.vercel.app",
+      "category": "Fin Models",
+      "subType": "site",
+      "note": "KarmYog Vatika investor information site",
+      "status": "live"
+    },
+    {
+      "title": "KarmYog Vatika Website",
+      "url": "https://karmyog-vatika-website.vercel.app",
+      "category": "vatika.ai",
+      "subType": "site",
+      "note": "KarmYog Vatika Gardens official website",
+      "status": "live"
+    },
+    {
+      "title": "RangaMati Vatika",
+      "url": "https://rangamati-vatika.vercel.app",
+      "category": "Rangamati",
+      "subType": "site",
+      "note": "RangaMati Vatika main site",
+      "status": "live"
+    },
+    {
+      "title": "Vatika Ankita",
+      "url": "https://vatika-ankita.vercel.app",
+      "category": "vatika.ai",
+      "subType": "app",
+      "note": "Vatika Ankita AI planter placement tool",
+      "status": "live"
+    }
+  ]
+}
