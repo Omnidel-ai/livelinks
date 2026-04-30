@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <circle cx="100" cy="100" r="100" fill="#f0e9d6"/>
+  <circle cx="100" cy="100" r="96" fill="#e8dcc4"/>
+  <!-- Hair -->
+  <ellipse cx="100" cy="75" rx="52" ry="55" fill="#1a1008"/>
+  <ellipse cx="100" cy="60" rx="48" ry="42" fill="#2a1a0e"/>
+  <!-- Face -->
+  <ellipse cx="100" cy="90" rx="38" ry="42" fill="#d4a574"/>
+  <ellipse cx="100" cy="92" rx="36" ry="40" fill="#dbb48a"/>
+  <!-- Eyes -->
+  <ellipse cx="86" cy="84" rx="5" ry="3.5" fill="#1a1008"/>
+  <ellipse cx="114" cy="84" rx="5" ry="3.5" fill="#1a1008"/>
+  <circle cx="87" cy="83.5" r="1.2" fill="white" opacity="0.6"/>
+  <circle cx="115" cy="83.5" r="1.2" fill="white" opacity="0.6"/>
+  <!-- Eyebrows -->
+  <path d="M78 78 Q86 74 94 78" stroke="#1a1008" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M106 78 Q114 74 122 78" stroke="#1a1008" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M97 90 Q100 96 103 90" stroke="#c4956a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Smile -->
+  <path d="M88 102 Q100 112 112 102" stroke="#b0785a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Bindi -->
+  <circle cx="100" cy="73" r="2.5" fill="#c8651e"/>
+  <!-- Hair sides -->
+  <path d="M52 80 Q48 60 55 45 Q62 32 75 28" stroke="#1a1008" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M148 80 Q152 60 145 45 Q138 32 125 28" stroke="#1a1008" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- Drape / clothing hint -->
+  <path d="M62 130 Q100 125 138 130 Q145 145 148 165 Q100 155 52 165 Q55 145 62 130Z" fill="#c8651e" opacity="0.85"/>
+  <path d="M65 132 Q100 127 135 132 Q140 145 143 160 Q100 152 57 160 Q60 145 65 132Z" fill="#d4782a" opacity="0.9"/>
+  <!-- Hair bottom -->
+  <path d="M55 85 Q50 110 55 135" stroke="#1a1008" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M145 85 Q150 110 145 135" stroke="#1a1008" stroke-width="6" fill="none" stroke-linecap="round"/>
+</svg>

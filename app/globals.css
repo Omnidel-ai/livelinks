@@ -455,24 +455,31 @@ textarea.lll-input {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  border: 2px solid var(--saffron);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(31, 26, 20, 0.3);
+  box-shadow: 0 4px 20px rgba(31, 26, 20, 0.25);
   transition: all 200ms ease;
   z-index: 40;
+  padding: 0;
+  overflow: hidden;
 }
 .sayani-fab:hover {
-  background: var(--saffron-deep);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(31, 26, 20, 0.35);
+  box-shadow: 0 8px 30px rgba(200, 101, 30, 0.3);
+  border-color: var(--saffron-deep);
+}
+.sayani-fab-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 999px;
 }
 
 .sayani-drawer {
@@ -511,6 +518,18 @@ textarea.lll-input {
   padding: 16px 16px 12px;
   border-bottom: 1px solid var(--paper-line);
   flex-shrink: 0;
+}
+.sayani-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sayani-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1.5px solid var(--paper-line);
+  object-fit: cover;
 }
 .sayani-name {
   font-family: var(--font-fraunces), Georgia, serif;
@@ -574,12 +593,21 @@ textarea.lll-input {
 
 .sayani-msg {
   display: flex;
+  gap: 8px;
 }
 .sayani-msg-user {
   justify-content: flex-end;
 }
 .sayani-msg-assistant {
   justify-content: flex-start;
+  align-items: flex-start;
+}
+.sayani-msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  margin-top: 4px;
 }
 .sayani-msg-content {
   max-width: 85%;

@@ -133,7 +133,11 @@ export default function SayaniChat() {
           className="sayani-fab"
           title="Ask Sayani, your librarian"
         >
-          <MessageCircle size={24} />
+          <img
+            src="/sayani-avatar.svg"
+            alt="Sayani"
+            className="sayani-fab-img"
+          />
         </button>
       )}
 
@@ -141,9 +145,16 @@ export default function SayaniChat() {
       {open && (
         <div className="sayani-drawer">
           <div className="sayani-header">
-            <div>
-              <div className="sayani-name">Sayani</div>
-              <div className="sayani-subtitle">your librarian</div>
+            <div className="sayani-header-left">
+              <img
+                src="/sayani-avatar.svg"
+                alt="Sayani"
+                className="sayani-header-avatar"
+              />
+              <div>
+                <div className="sayani-name">Sayani</div>
+                <div className="sayani-subtitle">your librarian</div>
+              </div>
             </div>
             <button
               onClick={() => setOpen(false)}
@@ -189,6 +200,13 @@ export default function SayaniChat() {
                 key={i}
                 className={`sayani-msg ${msg.role === "user" ? "sayani-msg-user" : "sayani-msg-assistant"}`}
               >
+                {msg.role === "assistant" && (
+                  <img
+                    src="/sayani-avatar.svg"
+                    alt=""
+                    className="sayani-msg-avatar"
+                  />
+                )}
                 <div className="sayani-msg-content">
                   {msg.role === "assistant" ? (
                     <FormattedMessage content={msg.content} />
