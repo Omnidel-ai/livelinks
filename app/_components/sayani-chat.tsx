@@ -134,7 +134,7 @@ export default function SayaniChat() {
           title="Ask Sayani, your librarian"
         >
           <img
-            src="/sayani-avatar.svg"
+            src="/sayani-avatar.png"
             alt="Sayani"
             className="sayani-fab-img"
           />
@@ -147,7 +147,7 @@ export default function SayaniChat() {
           <div className="sayani-header">
             <div className="sayani-header-left">
               <img
-                src="/sayani-avatar.svg"
+                src="/sayani-avatar.png"
                 alt="Sayani"
                 className="sayani-header-avatar"
               />
@@ -202,7 +202,7 @@ export default function SayaniChat() {
               >
                 {msg.role === "assistant" && (
                   <img
-                    src="/sayani-avatar.svg"
+                    src="/sayani-avatar.png"
                     alt=""
                     className="sayani-msg-avatar"
                   />
