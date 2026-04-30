@@ -1,22 +1,42 @@
-export default function Home() {
-  return (
-    <main className="flex flex-1 items-center justify-center px-6 py-24">
-      <div className="max-w-xl text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-ink-faint">
-          Gunakul Press
-        </p>
-        <h1 className="display mt-4 text-5xl font-medium text-ink">
-          Living Library of Links
-        </h1>
-        <p className="mt-6 text-lg leading-relaxed text-ink-soft">
-          A single page where every link that matters lives. Live links on the
-          Live Board. Older versions in the Archive. Never deleted.
-        </p>
-        <p className="mt-10 text-sm italic text-ink-faint">
-          Scaffolding in progress — visual port from{" "}
-          <span className="not-italic font-medium">lll.jsx</span> coming next.
-        </p>
-      </div>
-    </main>
-  );
+import { createClient } from "@/lib/supabase/server";
+import LLLBoard from "@/app/_components/lll-board";
+import type { Category, LinkRow, LinkView } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const supabase = await createClient();
+
+  const [{ data: categoriesData }, { data: linksData }] = await Promise.all([
+    supabase
+      .from("categories")
+      .select("id, name, position")
+      .order("position", { ascending: true }),
+    supabase
+      .from("links")
+      .select(
+        "id, title, url, category_id, sub_type, note, status, created_at, updated_at, created_by",
+      )
+      .order("updated_at", { ascending: false }),
+  ]);
+
+  const categories = (categoriesData ?? []) as Category[];
+  const links = (linksData ?? []) as LinkRow[];
+
+  const idToName = new Map(categories.map((c) => [c.id, c.name]));
+  const categoryNames = categories.map((c) => c.name);
+
+  const linkViews: LinkView[] = links.map((l) => ({
+    id: l.id,
+    title: l.title,
+    url: l.url,
+    category: l.category_id ? (idToName.get(l.category_id) ?? "") : "",
+    subType: l.sub_type ?? "",
+    note: l.note ?? "",
+    status: l.status,
+    createdAt: l.created_at,
+    updatedAt: l.updated_at,
+  }));
+
+  return <LLLBoard categories={categoryNames} links={linkViews} />;
 }

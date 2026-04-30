@@ -30,17 +30,301 @@ body {
   color: var(--ink);
 }
 
-body {
-  font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
-  font-feature-settings: "liga", "kern";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.lll-root {
+  background: var(--paper);
+  background-image:
+    radial-gradient(1200px 600px at 20% -10%, rgba(200, 101, 30, 0.06), transparent),
+    radial-gradient(800px 400px at 90% 110%, rgba(45, 58, 95, 0.05), transparent);
+  color: var(--ink);
+  font-family: var(--font-newsreader), Georgia, serif;
 }
 
-h1,
-h2,
-h3,
-h4,
-.display {
+.font-display {
   font-family: var(--font-fraunces), Georgia, serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+}
+.font-body {
+  font-family: var(--font-newsreader), Georgia, serif;
+}
+
+.text-ink { color: var(--ink); }
+.text-ink-soft { color: var(--ink-soft); }
+.text-ink-faint { color: var(--ink-faint); }
+.text-saffron { color: var(--saffron); }
+.text-saffron-deep { color: var(--saffron-deep); }
+.paper-line { border-color: var(--paper-line); }
+
+.tracking-paper { letter-spacing: 0.2em; }
+.tracking-quill { letter-spacing: 0.15em; }
+
+.dot-saffron {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--saffron);
+}
+
+.lll-btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-newsreader), serif;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 2px;
+  transition: all 200ms ease;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+.lll-btn-primary:hover {
+  background: var(--saffron-deep);
+  transform: translateY(-1px);
+}
+
+.lll-btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--paper-line);
+  padding: 9px 14px;
+  border-radius: 2px;
+  font-family: var(--font-newsreader), serif;
+  transition: all 200ms ease;
+  cursor: pointer;
+}
+.lll-btn-secondary:hover {
+  border-color: var(--ink);
+  background: var(--paper-deep);
+}
+
+.tab-btn {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  border-bottom: 1px solid transparent;
+  transition: all 200ms ease;
+  cursor: pointer;
+  background: transparent;
+}
+.tab-btn:hover {
+  color: var(--ink);
+}
+.tab-active {
+  color: var(--ink);
+  border-bottom-color: var(--saffron);
+}
+.tab-count {
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-feature-settings: "tnum";
+  letter-spacing: 0.05em;
+}
+.tab-active .tab-count {
+  color: var(--saffron);
+}
+
+.cat-section {
+  animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.cat-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--paper-line);
+  transition: border-color 200ms ease;
+  background: transparent;
+  cursor: pointer;
+}
+.cat-header:hover {
+  border-bottom-color: var(--ink-faint);
+}
+.cat-marker {
+  color: var(--ink-faint);
+  display: inline-flex;
+  width: 18px;
+}
+
+.link-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px 14px 28px;
+  border-radius: 3px;
+  transition: background 200ms ease;
+  position: relative;
+  list-style: none;
+}
+.link-row::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 23px;
+  width: 6px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+.link-row:hover {
+  background: var(--paper-deep);
+}
+.link-row-main {
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.link-title {
+  font-size: 17px;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 200ms ease;
+}
+.link-row:hover .link-title {
+  text-decoration-color: var(--saffron);
+}
+.link-pill {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 2px 8px;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  border: 1px solid var(--paper-line);
+  border-radius: 999px;
+  font-family: var(--font-newsreader), serif;
+}
+.link-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  flex-wrap: wrap;
+}
+.link-meta .dot-sep {
+  color: var(--ink-faint);
+}
+.link-note {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.link-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.link-row:hover .link-actions,
+.link-row:focus-within .link-actions {
+  opacity: 1;
+}
+@media (max-width: 640px) {
+  .link-actions {
+    opacity: 1;
+  }
+}
+.action-btn {
+  padding: 6px;
+  border-radius: 2px;
+  color: var(--ink-soft);
+  background: transparent;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
+}
+.action-btn:hover {
+  color: var(--ink);
+  background: var(--paper);
+}
+.action-danger:hover {
+  color: var(--saffron-deep);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 26, 20, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 50;
+  animation: backdropIn 200ms ease;
+}
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.modal-card {
+  background: var(--paper);
+  border: 1px solid var(--paper-line);
+  border-radius: 4px;
+  padding: 28px 32px 32px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 30px 60px -20px rgba(31, 26, 20, 0.3);
+  animation: modalIn 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lll-input {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  border-radius: 2px;
+  color: var(--ink);
+  font-family: var(--font-newsreader), serif;
+  font-size: 15px;
+  transition: all 200ms ease;
+}
+.lll-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--paper);
+}
+.lll-input::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+textarea.lll-input {
+  resize: vertical;
+  min-height: 50px;
 }
