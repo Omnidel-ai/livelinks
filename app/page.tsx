@@ -15,7 +15,7 @@ export default async function Home() {
     supabase
       .from("links")
       .select(
-        "id, title, url, category_id, sub_type, note, status, created_at, updated_at, created_by",
+        "id, title, url, category_id, sub_type, note, description, source_date, status, created_at, updated_at, created_by",
       )
       .order("updated_at", { ascending: false }),
   ]);
@@ -33,6 +33,8 @@ export default async function Home() {
     category: l.category_id ? (idToName.get(l.category_id) ?? "") : "",
     subType: l.sub_type ?? "",
     note: l.note ?? "",
+    description: l.description ?? "",
+    sourceDate: l.source_date ?? "",
     status: l.status,
     createdAt: l.created_at,
     updatedAt: l.updated_at,

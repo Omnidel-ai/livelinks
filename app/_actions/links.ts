@@ -11,6 +11,8 @@ export type UpsertLinkInput = {
   category: string;
   subType?: string;
   note?: string;
+  description?: string;
+  sourceDate?: string;
 };
 
 async function getOrCreateCategoryId(
@@ -59,6 +61,8 @@ export async function upsertLink(input: UpsertLinkInput) {
 
   const subType = input.subType?.trim().toLowerCase() || null;
   const note = input.note?.trim() || null;
+  const description = input.description?.trim() || null;
+  const sourceDate = input.sourceDate || null;
 
   if (input.id) {
     const { error } = await supabase
@@ -69,6 +73,8 @@ export async function upsertLink(input: UpsertLinkInput) {
         category_id: categoryId,
         sub_type: subType,
         note,
+        description,
+        source_date: sourceDate,
       })
       .eq("id", input.id);
     if (error) throw error;
@@ -79,6 +85,8 @@ export async function upsertLink(input: UpsertLinkInput) {
       category_id: categoryId,
       sub_type: subType,
       note,
+      description,
+      source_date: sourceDate,
       status: "live",
       created_by: null,
     });

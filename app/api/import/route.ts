@@ -12,6 +12,8 @@ type ImportLink = {
   category: string;
   subType?: string | null;
   note?: string | null;
+  description?: string | null;
+  sourceDate?: string | null;
   status?: LinkStatus | null;
   createdAt?: string | null;
   updatedAt?: string | null;
@@ -117,6 +119,8 @@ export async function POST(request: NextRequest) {
       category_id: categoryId,
       sub_type: l.subType?.trim().toLowerCase() || null,
       note: l.note?.trim() || null,
+      description: l.description?.trim() || null,
+      source_date: l.sourceDate || null,
       status,
       created_at: l.createdAt || undefined,
       updated_at: l.updatedAt || undefined,

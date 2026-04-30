@@ -19,6 +19,14 @@ import {
   ChevronRight,
   Check,
   Library,
+  Search,
+  ChevronsUpDown,
+  Share2,
+  Mail,
+  MessageCircle,
+  Send,
+  Phone,
+  Info,
 } from "lucide-react";
 import type { LinkView } from "@/lib/types";
 import { ensureProtocol, formatDate, shortUrl } from "@/lib/format";
@@ -43,9 +51,19 @@ const SUBTYPE_SUGGESTIONS = [
   "site",
   "drive folder",
   "video",
+  "tool",
+  "dashboard",
+  "demo",
+  "archive",
+];
+
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
 ];
 
 type View = "live" | "archive";
+type CatSort = "alpha" | "age";
 
 type Props = {
   categories: string[];
@@ -53,14 +71,26 @@ type Props = {
   userEmail: string | null;
 };
 
-export default function LLLBoard({ categories, links, userEmail }: Props) {
+export default function LLLBoard({ categories, links }: Props) {
   const [view, setView] = useState<View>("live");
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<LinkView | null>(null);
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>(() => {
+    const init: Record<string, boolean> = {};
+    for (const c of categories) init[c] = true;
+    return init;
+  });
   const [savedFlash, setSavedFlash] = useState(false);
   const [isPending, startTransition] = useTransition();
   const justSavedRef = useRef(false);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchIncludeArchive, setSearchIncludeArchive] = useState(false);
+  const [searchSubType, setSearchSubType] = useState("");
+  const [categorySubTypeFilter, setCategorySubTypeFilter] = useState<Record<string, string>>({});
+  const [catSort, setCatSort] = useState<CatSort>("alpha");
+
+  const isSearching = searchQuery.trim().length > 0;
 
   useEffect(() => {
     if (!isPending && justSavedRef.current) {
@@ -74,15 +104,60 @@ export default function LLLBoard({ categories, links, userEmail }: Props) {
   const liveCount = links.filter((l) => l.status === "live").length;
   const archiveCount = links.filter((l) => l.status === "archive").length;
 
-  const categoriesToShow = useMemo(() => {
-    if (view === "archive") {
-      const present = new Set(
-        links.filter((l) => l.status === "archive").map((l) => l.category),
-      );
-      return categories.filter((c) => present.has(c));
+  const allSubTypes = useMemo(() => {
+    const set = new Set<string>();
+    for (const l of links) if (l.subType) set.add(l.subType);
+    return Array.from(set).sort();
+  }, [links]);
+
+  const searchResults = useMemo(() => {
+    if (!isSearching) return null;
+    const q = searchQuery.trim().toLowerCase();
+    let pool = searchIncludeArchive
+      ? links
+      : links.filter((l) => l.status === "live");
+    let results = pool.filter(
+      (l) =>
+        l.title.toLowerCase().includes(q) ||
+        l.url.toLowerCase().includes(q) ||
+        l.note.toLowerCase().includes(q) ||
+        l.description.toLowerCase().includes(q),
+    );
+    if (searchSubType) {
+      results = results.filter((l) => l.subType === searchSubType);
     }
-    return categories;
-  }, [view, categories, links]);
+    const live = results.filter((l) => l.status === "live");
+    const archive = results.filter((l) => l.status === "archive");
+    return { live, archive, total: results.length };
+  }, [isSearching, searchQuery, searchIncludeArchive, searchSubType, links]);
+
+  const categoriesToShow = useMemo(() => {
+    const status = view === "live" ? "live" : "archive";
+    const present = new Set(
+      links.filter((l) => l.status === status).map((l) => l.category),
+    );
+    let cats = view === "archive"
+      ? categories.filter((c) => present.has(c))
+      : categories;
+
+    if (catSort === "alpha") {
+      cats = [...cats].sort((a, b) => a.localeCompare(b));
+    } else {
+      const earliest = new Map<string, string>();
+      for (const l of links) {
+        if (l.sourceDate) {
+          const cur = earliest.get(l.category);
+          if (!cur || l.sourceDate < cur) earliest.set(l.category, l.sourceDate);
+        }
+      }
+      cats = [...cats].sort((a, b) => {
+        const da = earliest.get(a) || "9999";
+        const db = earliest.get(b) || "9999";
+        return da.localeCompare(db);
+      });
+    }
+    return cats;
+  }, [view, categories, links, catSort]);
 
   const linksByCategory = useMemo(() => {
     const visible = links.filter((l) =>
@@ -101,6 +176,14 @@ export default function LLLBoard({ categories, links, userEmail }: Props) {
     }
     return map;
   }, [view, links, categories]);
+
+  const allCollapsed = categoriesToShow.every((c) => collapsed[c]);
+  const toggleAllCollapse = () => {
+    const next: Record<string, boolean> = {};
+    const shouldCollapse = !allCollapsed;
+    for (const c of categories) next[c] = shouldCollapse;
+    setCollapsed(next);
+  };
 
   const runMutation = (fn: () => Promise<void>) => {
     justSavedRef.current = true;
@@ -157,24 +240,38 @@ export default function LLLBoard({ categories, links, userEmail }: Props) {
     setEditing(null);
   };
 
+  const getFilteredItems = (cat: string) => {
+    const items = linksByCategory[cat] || [];
+    const filter = categorySubTypeFilter[cat];
+    if (!filter) return items;
+    return items.filter((l) => l.subType === filter);
+  };
+
+  const getSubTypesForCategory = (cat: string) => {
+    const items = linksByCategory[cat] || [];
+    const set = new Set<string>();
+    for (const l of items) if (l.subType) set.add(l.subType);
+    return Array.from(set).sort();
+  };
+
   return (
     <div className="lll-root min-h-screen pb-24">
       <header className="border-b paper-line">
-        <div className="max-w-5xl mx-auto px-6 pt-10 pb-6">
+        <div className="max-w-7xl mx-auto px-6 pt-10 pb-6">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
               <div className="flex items-center gap-2 text-xs uppercase text-ink-soft mb-3 font-body tracking-paper">
                 <span className="dot-saffron"></span>
-                <span>The Gunakul · Living Library</span>
+                <span>KarmYog Link Library</span>
               </div>
               <h1 className="font-display text-5xl md:text-6xl text-ink leading-none">
-                Living Library
+                KarmYog
                 <br />
-                <span className="italic text-ink-soft">of Links</span>
+                <span className="italic text-ink-soft">Link Library</span>
               </h1>
               <p className="mt-4 text-ink-soft font-body italic max-w-md">
-                One place. Live links breathing on the board, old ones at rest
-                in the archive — never deleted.
+                One place. Live links on the board, old ones at rest
+                in the archives — never deleted.
               </p>
             </div>
             <button
@@ -191,14 +288,14 @@ export default function LLLBoard({ categories, links, userEmail }: Props) {
               onClick={() => setView("live")}
               className={`tab-btn ${view === "live" ? "tab-active" : ""}`}
             >
-              <span>Live Board</span>
+              <span>Link Board</span>
               <span className="tab-count">{liveCount}</span>
             </button>
             <button
               onClick={() => setView("archive")}
               className={`tab-btn ${view === "archive" ? "tab-active" : ""}`}
             >
-              <span>Archive</span>
+              <span>Link Archives</span>
               <span className="tab-count">{archiveCount}</span>
             </button>
             <div className="ml-auto text-xs text-ink-soft font-body italic">
@@ -213,78 +310,211 @@ export default function LLLBoard({ categories, links, userEmail }: Props) {
               )}
             </div>
           </div>
+
+          {/* Search bar */}
+          <div className="mt-6 space-y-3">
+            <div className="relative">
+              <Search
+                size={16}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint"
+              />
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search links by title, URL, or note…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSearchSubType("");
+                    setSearchIncludeArchive(false);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 action-btn"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+            {isSearching && (
+              <div className="flex items-center gap-4 flex-wrap text-sm font-body">
+                <label className="inline-flex items-center gap-2 text-ink-soft cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={searchIncludeArchive}
+                    onChange={(e) => setSearchIncludeArchive(e.target.checked)}
+                    className="accent-saffron"
+                  />
+                  Include archives
+                </label>
+                {allSubTypes.length > 0 && (
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-ink-faint text-xs uppercase tracking-paper">Sub-type:</span>
+                    <button
+                      onClick={() => setSearchSubType("")}
+                      className={`filter-pill ${!searchSubType ? "filter-pill-active" : ""}`}
+                    >
+                      All
+                    </button>
+                    {allSubTypes.map((st) => (
+                      <button
+                        key={st}
+                        onClick={() => setSearchSubType(searchSubType === st ? "" : st)}
+                        className={`filter-pill ${searchSubType === st ? "filter-pill-active" : ""}`}
+                      >
+                        {st}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 pt-10">
-        {(view === "live" ? liveCount : archiveCount) === 0 ? (
+      <main className="max-w-7xl mx-auto px-6 pt-10">
+        {isSearching && searchResults ? (
+          <SearchResultsView
+            results={searchResults}
+            includeArchive={searchIncludeArchive}
+            onToggle={handleToggle}
+            onEdit={openEdit}
+            onRemove={handleRemove}
+            query={searchQuery}
+          />
+        ) : (view === "live" ? liveCount : archiveCount) === 0 ? (
           <EmptyState view={view} onAdd={openAdd} />
         ) : (
-          <div className="space-y-12">
-            {categoriesToShow.map((cat, idx) => {
-              const items = linksByCategory[cat] || [];
-              if (view === "archive" && items.length === 0) return null;
-              const isCollapsed = collapsed[cat];
-              return (
-                <section
-                  key={cat}
-                  className="cat-section"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+          <>
+            <div className="flex items-center gap-3 mb-8 font-body">
+              <button
+                onClick={toggleAllCollapse}
+                className="lll-btn-secondary text-sm inline-flex items-center gap-2"
+              >
+                <ChevronsUpDown size={14} />
+                {allCollapsed ? "Expand All" : "Collapse All"}
+              </button>
+              <div className="flex items-center gap-2 text-sm text-ink-soft">
+                <span>Sort:</span>
+                <button
+                  onClick={() => setCatSort("alpha")}
+                  className={`filter-pill ${catSort === "alpha" ? "filter-pill-active" : ""}`}
                 >
-                  <button
-                    onClick={() =>
-                      setCollapsed((c) => ({ ...c, [cat]: !c[cat] }))
-                    }
-                    className="cat-header w-full flex items-center justify-between text-left"
+                  A–Z
+                </button>
+                <button
+                  onClick={() => setCatSort("age")}
+                  className={`filter-pill ${catSort === "age" ? "filter-pill-active" : ""}`}
+                >
+                  Age
+                </button>
+              </div>
+            </div>
+            <div className="categories-grid">
+              {categoriesToShow.map((cat, idx) => {
+                const allItems = linksByCategory[cat] || [];
+                const items = getFilteredItems(cat);
+                const subTypes = getSubTypesForCategory(cat);
+                if (view === "archive" && allItems.length === 0) return null;
+                const isCollapsed = collapsed[cat];
+                const activeFilter = categorySubTypeFilter[cat] || "";
+                return (
+                  <section
+                    key={cat}
+                    className="cat-section"
+                    style={{ animationDelay: `${idx * 50}ms` }}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className="cat-marker">
-                        {isCollapsed ? (
-                          <ChevronRight size={14} />
-                        ) : (
-                          <ChevronDown size={14} />
+                    <button
+                      onClick={() =>
+                        setCollapsed((c) => ({ ...c, [cat]: !c[cat] }))
+                      }
+                      className="cat-header w-full flex items-center justify-between text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="cat-marker">
+                          {isCollapsed ? (
+                            <ChevronRight size={14} />
+                          ) : (
+                            <ChevronDown size={14} />
+                          )}
+                        </span>
+                        <h2 className="font-display text-2xl text-ink">{cat}</h2>
+                        <span className="text-ink-faint font-body text-sm">
+                          {allItems.length || ""}
+                        </span>
+                      </div>
+                      {allItems.length === 0 && (
+                        <span className="text-xs text-ink-faint italic font-body">
+                          empty
+                        </span>
+                      )}
+                    </button>
+                    {!isCollapsed && allItems.length > 0 && (
+                      <>
+                        {subTypes.length > 1 && (
+                          <div className="mt-3 flex items-center gap-2 flex-wrap pl-7">
+                            <button
+                              onClick={() =>
+                                setCategorySubTypeFilter((p) => ({ ...p, [cat]: "" }))
+                              }
+                              className={`filter-pill ${!activeFilter ? "filter-pill-active" : ""}`}
+                            >
+                              All
+                            </button>
+                            {subTypes.map((st) => (
+                              <button
+                                key={st}
+                                onClick={() =>
+                                  setCategorySubTypeFilter((p) => ({
+                                    ...p,
+                                    [cat]: activeFilter === st ? "" : st,
+                                  }))
+                                }
+                                className={`filter-pill ${activeFilter === st ? "filter-pill-active" : ""}`}
+                              >
+                                {st}
+                              </button>
+                            ))}
+                          </div>
                         )}
-                      </span>
-                      <h2 className="font-display text-2xl text-ink">{cat}</h2>
-                      <span className="text-ink-faint font-body text-sm">
-                        {items.length || ""}
-                      </span>
-                    </div>
-                    {items.length === 0 && (
-                      <span className="text-xs text-ink-faint italic font-body">
-                        empty
-                      </span>
+                        <ol className="mt-3">
+                          {items.map((link, idx) => (
+                            <LinkRow
+                              key={link.id}
+                              link={link}
+                              index={idx + 1}
+                              onToggle={() => handleToggle(link.id)}
+                              onEdit={() => openEdit(link)}
+                              onRemove={() => handleRemove(link.id)}
+                              view={view}
+                            />
+                          ))}
+                          {items.length === 0 && activeFilter && (
+                            <li className="text-sm text-ink-faint italic font-body pl-7 py-3">
+                              No {activeFilter} links in this category.
+                            </li>
+                          )}
+                        </ol>
+                      </>
                     )}
-                  </button>
-                  {!isCollapsed && items.length > 0 && (
-                    <ul className="mt-3">
-                      {items.map((link) => (
-                        <LinkRow
-                          key={link.id}
-                          link={link}
-                          onToggle={() => handleToggle(link.id)}
-                          onEdit={() => openEdit(link)}
-                          onRemove={() => handleRemove(link.id)}
-                          view={view}
-                        />
-                      ))}
-                    </ul>
-                  )}
-                  {!isCollapsed && items.length === 0 && view === "live" && (
-                    <p className="mt-3 text-sm text-ink-faint italic font-body pl-7">
-                      No live links here yet.
-                    </p>
-                  )}
-                </section>
-              );
-            })}
-          </div>
+                    {!isCollapsed && allItems.length === 0 && view === "live" && (
+                      <p className="mt-3 text-sm text-ink-faint italic font-body pl-7">
+                        No live links here yet.
+                      </p>
+                    )}
+                  </section>
+                );
+              })}
+            </div>
+          </>
         )}
 
         <footer className="mt-24 pt-8 border-t paper-line text-center font-body italic text-ink-faint text-sm">
           <p>
-            v1 · destination:{" "}
-            <span className="text-ink-soft">vatika.live</span>
+            v2 · KarmYog Link Library
           </p>
         </footer>
       </main>
@@ -302,26 +532,141 @@ export default function LLLBoard({ categories, links, userEmail }: Props) {
   );
 }
 
+/* ---------- Search Results ---------- */
+
+function SearchResultsView({
+  results,
+  includeArchive,
+  onToggle,
+  onEdit,
+  onRemove,
+  query,
+}: {
+  results: { live: LinkView[]; archive: LinkView[]; total: number };
+  includeArchive: boolean;
+  onToggle: (id: string) => void;
+  onEdit: (link: LinkView) => void;
+  onRemove: (id: string) => void;
+  query: string;
+}) {
+  if (results.total === 0) {
+    return (
+      <div className="text-center py-16 font-body text-ink-soft">
+        <Search className="mx-auto mb-4 opacity-30" size={40} />
+        <p className="italic">
+          No links match &ldquo;{query}&rdquo;
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      {results.live.length > 0 && (
+        <div>
+          {includeArchive && (
+            <h3 className="text-xs uppercase tracking-paper text-ink-soft font-body mb-4">
+              Link Board results
+              <span className="tab-count ml-2">{results.live.length}</span>
+            </h3>
+          )}
+          <ol>
+            {results.live.map((link, idx) => (
+              <LinkRow
+                key={link.id}
+                link={link}
+                index={idx + 1}
+                onToggle={() => onToggle(link.id)}
+                onEdit={() => onEdit(link)}
+                onRemove={() => onRemove(link.id)}
+                view="live"
+                showCategory
+              />
+            ))}
+          </ol>
+        </div>
+      )}
+      {includeArchive && results.archive.length > 0 && (
+        <div>
+          <h3 className="text-xs uppercase tracking-paper text-ink-soft font-body mb-4">
+            Link Archives results
+            <span className="tab-count ml-2">{results.archive.length}</span>
+          </h3>
+          <ol>
+            {results.archive.map((link, idx) => (
+              <LinkRow
+                key={link.id}
+                link={link}
+                index={idx + 1}
+                onToggle={() => onToggle(link.id)}
+                onEdit={() => onEdit(link)}
+                onRemove={() => onRemove(link.id)}
+                view="archive"
+                showCategory
+              />
+            ))}
+          </ol>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- Link Row ---------- */
+
 function LinkRow({
   link,
+  index,
   onToggle,
   onEdit,
   onRemove,
   view,
+  showCategory,
 }: {
   link: LinkView;
+  index: number;
   onToggle: () => void;
   onEdit: () => void;
   onRemove: () => void;
   view: View;
+  showCategory?: boolean;
 }) {
+  const [showDesc, setShowDesc] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const shareRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!shareOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (shareRef.current && !shareRef.current.contains(e.target as Node)) {
+        setShareOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [shareOpen]);
+
   const handleOpen = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     window.open(ensureProtocol(link.url), "_blank", "noopener,noreferrer");
   };
+
+  const handleShare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (typeof navigator !== "undefined" && navigator.share) {
+      navigator.share({ title: link.title, url: link.url }).catch(() => {});
+    } else {
+      setShareOpen(!shareOpen);
+    }
+  };
+
+  const shareText = `${link.title} ${link.url}`;
+
   return (
     <li className="link-row">
+      <span className="link-number">{index}.</span>
       <a
         href={ensureProtocol(link.url)}
         target="_blank"
@@ -331,15 +676,89 @@ function LinkRow({
         <div className="flex items-baseline gap-3 flex-wrap">
           <span className="link-title font-body">{link.title}</span>
           {link.subType && <span className="link-pill">{link.subType}</span>}
+          {showCategory && (
+            <span className="link-pill link-pill-cat">{link.category}</span>
+          )}
         </div>
         <div className="link-meta">
           <span className="truncate">{shortUrl(link.url)}</span>
           <span className="dot-sep">·</span>
           <span className="shrink-0">{formatDate(link.updatedAt)}</span>
+          {link.sourceDate && (
+            <>
+              <span className="dot-sep">·</span>
+              <span className="shrink-0">src {formatSourceDate(link.sourceDate)}</span>
+            </>
+          )}
         </div>
         {link.note && <div className="link-note">{link.note}</div>}
+        {link.description && (
+          <div className="mt-1">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowDesc(!showDesc);
+              }}
+              className="inline-flex items-center gap-1 text-xs text-ink-faint hover:text-ink-soft transition-colors"
+            >
+              <Info size={11} />
+              {showDesc ? "less" : "more"}
+            </button>
+            {showDesc && (
+              <div className="link-description">{link.description}</div>
+            )}
+          </div>
+        )}
       </a>
-      <div className="link-actions">
+      <div className="link-actions" ref={shareRef}>
+        <button
+          onClick={handleShare}
+          className="action-btn"
+          title="Share"
+        >
+          <Share2 size={14} />
+        </button>
+        {shareOpen && (
+          <div className="share-popover">
+            <a
+              href={`mailto:?subject=${encodeURIComponent(link.title)}&body=${encodeURIComponent(link.url)}`}
+              className="share-option"
+              title="Email"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Mail size={14} />
+            </a>
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(shareText)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="share-option"
+              title="WhatsApp"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <MessageCircle size={14} />
+            </a>
+            <a
+              href={`https://t.me/share/url?url=${encodeURIComponent(link.url)}&text=${encodeURIComponent(link.title)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="share-option"
+              title="Telegram"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Send size={14} />
+            </a>
+            <a
+              href={`sms:?body=${encodeURIComponent(shareText)}`}
+              className="share-option"
+              title="SMS"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Phone size={14} />
+            </a>
+          </div>
+        )}
         <button
           onClick={handleOpen}
           className="action-btn"
@@ -365,7 +784,7 @@ function LinkRow({
             onToggle();
           }}
           className="action-btn"
-          title={view === "live" ? "Move to Archive" : "Restore to Live"}
+          title={view === "live" ? "Move to Archives" : "Restore to Board"}
         >
           {view === "live" ? (
             <Archive size={14} />
@@ -389,13 +808,15 @@ function LinkRow({
   );
 }
 
+/* ---------- Empty State ---------- */
+
 function EmptyState({ view, onAdd }: { view: View; onAdd: () => void }) {
   if (view === "archive") {
     return (
       <div className="text-center py-20 font-body text-ink-soft">
         <Library className="mx-auto mb-4 opacity-30" size={40} />
         <p className="italic">
-          The archive is empty. Old versions will rest here when moved.
+          The archives are empty. Old versions will rest here when moved.
         </p>
       </div>
     );
@@ -410,7 +831,7 @@ function EmptyState({ view, onAdd }: { view: View; onAdd: () => void }) {
         Your library is empty.
       </p>
       <p className="text-ink-soft mb-6">
-        Add the first link — say, the Rangamati final playbook.
+        Add the first link to get started.
       </p>
       <button
         onClick={onAdd}
@@ -421,6 +842,8 @@ function EmptyState({ view, onAdd }: { view: View; onAdd: () => void }) {
     </div>
   );
 }
+
+/* ---------- Modal ---------- */
 
 function LinkModal({
   link,
@@ -442,6 +865,15 @@ function LinkModal({
   );
   const [subType, setSubType] = useState(link?.subType || "");
   const [note, setNote] = useState(link?.note || "");
+  const [description, setDescription] = useState(link?.description || "");
+  const [sourceMonth, setSourceMonth] = useState(() => {
+    if (link?.sourceDate) return new Date(link.sourceDate).getMonth() + 1;
+    return 0;
+  });
+  const [sourceYear, setSourceYear] = useState(() => {
+    if (link?.sourceDate) return new Date(link.sourceDate).getFullYear();
+    return 0;
+  });
   const [newCategory, setNewCategory] = useState("");
   const [showNewCat, setShowNewCat] = useState(false);
   const [error, setError] = useState("");
@@ -458,6 +890,9 @@ function LinkModal({
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 10 }, (_, i) => currentYear - i);
 
   const submit = () => {
     if (!title.trim()) {
@@ -477,6 +912,13 @@ function LinkModal({
       setError("Pick or add a category.");
       return;
     }
+
+    let sourceDate: string | undefined;
+    if (sourceMonth && sourceYear) {
+      const mm = String(sourceMonth).padStart(2, "0");
+      sourceDate = `${sourceYear}-${mm}-15`;
+    }
+
     onSave({
       id: link?.id,
       title: title.trim(),
@@ -484,6 +926,8 @@ function LinkModal({
       category: cat,
       subType: subType.trim().toLowerCase(),
       note: note.trim(),
+      description: description.trim(),
+      sourceDate,
     });
   };
 
@@ -575,6 +1019,34 @@ function LinkModal({
               ))}
             </datalist>
           </Field>
+          <Field label="Source Date (optional)">
+            <div className="flex gap-2">
+              <select
+                className="lll-input flex-1"
+                value={sourceMonth}
+                onChange={(e) => setSourceMonth(Number(e.target.value))}
+              >
+                <option value={0}>Month…</option>
+                {MONTHS.map((m, i) => (
+                  <option key={m} value={i + 1}>
+                    {m}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="lll-input flex-1"
+                value={sourceYear}
+                onChange={(e) => setSourceYear(Number(e.target.value))}
+              >
+                <option value={0}>Year…</option>
+                {years.map((y) => (
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </Field>
           <Field label="Note (optional)">
             <textarea
               className="lll-input"
@@ -582,6 +1054,15 @@ function LinkModal({
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="One-line context for future-you"
+            />
+          </Field>
+          <Field label="Description (optional — expandable detail)">
+            <textarea
+              className="lll-input"
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Longer description, hidden by default, shown on demand"
             />
           </Field>
           {error && (
@@ -596,13 +1077,15 @@ function LinkModal({
             Cancel
           </button>
           <button onClick={submit} className="lll-btn-primary">
-            {link ? "Save changes" : "Add to Live Board"}
+            {link ? "Save changes" : "Add to Link Board"}
           </button>
         </div>
       </div>
     </div>
   );
 }
+
+/* ---------- Helpers ---------- */
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -613,4 +1096,10 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
       {children}
     </label>
   );
+}
+
+function formatSourceDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return `${MONTHS[d.getMonth()]?.slice(0, 3)} ${d.getFullYear()}`;
 }

@@ -15,8 +15,8 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Living Library of Links",
-  description: "The Gunakul's living library of links.",
+  title: "KarmYog Link Library",
+  description: "KarmYog's living library of links.",
 };
 
 export default function RootLayout({

@@ -66,6 +66,8 @@ body {
   background: var(--saffron);
 }
 
+/* ---------- Buttons ---------- */
+
 .lll-btn-primary {
   background: var(--ink);
   color: var(--paper);
@@ -97,6 +99,8 @@ body {
   background: var(--paper-deep);
 }
 
+/* ---------- Tabs ---------- */
+
 .tab-btn {
   display: inline-flex;
   align-items: baseline;
@@ -124,6 +128,68 @@ body {
 }
 .tab-active .tab-count {
   color: var(--saffron);
+}
+
+/* ---------- Search ---------- */
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  border-radius: 3px;
+  color: var(--ink);
+  font-family: var(--font-newsreader), serif;
+  font-size: 15px;
+  transition: all 200ms ease;
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--paper);
+}
+.search-input::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ---------- Filter pills ---------- */
+
+.filter-pill {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  background: transparent;
+  color: var(--ink-faint);
+  border: 1px solid var(--paper-line);
+  border-radius: 999px;
+  font-family: var(--font-newsreader), serif;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.filter-pill:hover {
+  border-color: var(--ink-soft);
+  color: var(--ink-soft);
+}
+.filter-pill-active {
+  border-color: var(--saffron);
+  color: var(--saffron);
+  background: rgba(200, 101, 30, 0.08);
+}
+
+/* ---------- Categories grid ---------- */
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 2rem;
+}
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .cat-section {
@@ -155,29 +221,34 @@ body {
   width: 18px;
 }
 
+/* ---------- Link rows ---------- */
+
 .link-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
-  padding: 14px 16px 14px 28px;
+  gap: 12px;
+  padding: 12px 12px 12px 8px;
   border-radius: 3px;
   transition: background 200ms ease;
   position: relative;
   list-style: none;
 }
-.link-row::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  top: 23px;
-  width: 6px;
-  height: 1px;
-  background: var(--ink-faint);
-}
 .link-row:hover {
   background: var(--paper-deep);
 }
+
+.link-number {
+  flex-shrink: 0;
+  width: 24px;
+  text-align: right;
+  font-size: 13px;
+  color: var(--ink-faint);
+  font-family: var(--font-newsreader), serif;
+  padding-top: 2px;
+  font-feature-settings: "tnum";
+}
+
 .link-row-main {
   flex: 1;
   min-width: 0;
@@ -186,7 +257,7 @@ body {
   display: block;
 }
 .link-title {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--ink);
   text-decoration: underline;
   text-decoration-color: transparent;
@@ -208,6 +279,11 @@ body {
   border-radius: 999px;
   font-family: var(--font-newsreader), serif;
 }
+.link-pill-cat {
+  background: rgba(200, 101, 30, 0.08);
+  border-color: rgba(200, 101, 30, 0.2);
+  color: var(--saffron);
+}
 .link-meta {
   display: flex;
   align-items: center;
@@ -228,12 +304,23 @@ body {
   font-style: italic;
   opacity: 0.85;
 }
+.link-description {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* ---------- Link actions + share ---------- */
 
 .link-actions {
   display: flex;
   gap: 4px;
   opacity: 0;
   transition: opacity 200ms ease;
+  position: relative;
+  flex-shrink: 0;
 }
 .link-row:hover .link-actions,
 .link-row:focus-within .link-actions {
@@ -260,6 +347,39 @@ body {
 .action-danger:hover {
   color: var(--saffron-deep);
 }
+
+.share-popover {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  display: flex;
+  gap: 2px;
+  background: var(--paper);
+  border: 1px solid var(--paper-line);
+  border-radius: 4px;
+  padding: 4px;
+  box-shadow: 0 8px 24px -8px rgba(31, 26, 20, 0.2);
+  z-index: 30;
+  animation: modalIn 150ms ease;
+}
+.share-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: all 150ms ease;
+}
+.share-option:hover {
+  color: var(--saffron);
+  background: var(--paper-deep);
+}
+
+/* ---------- Modal ---------- */
 
 .modal-backdrop {
   position: fixed;
