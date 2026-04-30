@@ -1,14 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import LLLBoard from "@/app/_components/lll-board";
 import type { Category, LinkRow, LinkView } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const supabase = createAdminClient();
 
   const [{ data: categoriesData }, { data: linksData }] = await Promise.all([
     supabase
@@ -45,7 +42,7 @@ export default async function Home() {
     <LLLBoard
       categories={categoryNames}
       links={linkViews}
-      userEmail={user?.email ?? null}
+      userEmail={null}
     />
   );
 }

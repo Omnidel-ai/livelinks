@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { ensureProtocol } from "@/lib/format";
 
 export type UpsertLinkInput = {
@@ -14,7 +14,7 @@ export type UpsertLinkInput = {
 };
 
 async function getOrCreateCategoryId(
-  supabase: Awaited<ReturnType<typeof createClient>>,
+  supabase: ReturnType<typeof createAdminClient>,
   name: string,
 ): Promise<string> {
   const trimmed = name.trim();
@@ -48,11 +48,7 @@ async function getOrCreateCategoryId(
 }
 
 export async function upsertLink(input: UpsertLinkInput) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not signed in");
+  const supabase = createAdminClient();
 
   const title = input.title.trim();
   const url = ensureProtocol(input.url.trim());
@@ -84,7 +80,7 @@ export async function upsertLink(input: UpsertLinkInput) {
       sub_type: subType,
       note,
       status: "live",
-      created_by: user.id,
+      created_by: null,
     });
     if (error) throw error;
   }
@@ -93,7 +89,7 @@ export async function upsertLink(input: UpsertLinkInput) {
 }
 
 export async function toggleLinkStatus(id: string) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const current = await supabase
     .from("links")
     .select("status")
@@ -111,14 +107,14 @@ export async function toggleLinkStatus(id: string) {
 }
 
 export async function deleteLink(id: string) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const { error } = await supabase.from("links").delete().eq("id", id);
   if (error) throw error;
   revalidatePath("/");
 }
 
 export async function addCategory(name: string) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   await getOrCreateCategoryId(supabase, name);
   revalidatePath("/");
 }

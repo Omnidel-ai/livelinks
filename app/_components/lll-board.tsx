@@ -29,7 +29,6 @@ import {
   upsertLink,
   type UpsertLinkInput,
 } from "@/app/_actions/links";
-import { signOut } from "@/app/_actions/auth";
 
 const SUBTYPE_SUGGESTIONS = [
   "playbook",
@@ -287,23 +286,6 @@ export default function LLLBoard({ categories, links, userEmail }: Props) {
             v1 · destination:{" "}
             <span className="text-ink-soft">vatika.live</span>
           </p>
-          {userEmail && (
-            <div className="mt-2 inline-flex items-center gap-2">
-              <span>
-                signed in as{" "}
-                <span className="not-italic text-ink-soft">{userEmail}</span>
-              </span>
-              <span className="dot-sep">·</span>
-              <form action={signOut}>
-                <button
-                  type="submit"
-                  className="not-italic underline underline-offset-2 hover:text-ink"
-                >
-                  sign out
-                </button>
-              </form>
-            </div>
-          )}
         </footer>
       </main>
 
