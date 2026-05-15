@@ -1,7 +1,17 @@
+export type Organization = {
+  id: string;
+  name: string;
+  slug: string;
+  color: string;
+  description: string | null;
+  position: number;
+};
+
 export type Category = {
   id: string;
   name: string;
   position: number;
+  org_id: string | null;
 };
 
 export type LinkStatus = "live" | "archive";
@@ -26,6 +36,8 @@ export type LinkView = {
   title: string;
   url: string;
   category: string;
+  orgSlug: string;
+  orgColor: string;
   subType: string;
   note: string;
   description: string;
@@ -33,4 +45,22 @@ export type LinkView = {
   status: LinkStatus;
   createdAt: string;
   updatedAt: string;
+};
+
+export type OrgGroup = {
+  org: Organization;
+  categories: { name: string; count: number }[];
+  totalLinks: number;
+};
+
+export type VercelDeployment = {
+  id: string;
+  project_name: string;
+  project_url: string;
+  branch: string | null;
+  commit_message: string | null;
+  created_at: string;
+  status: string | null;
+  org_slug: string | null;
+  link_id: string | null;
 };
