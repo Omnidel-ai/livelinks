@@ -190,10 +190,12 @@ export default function LiveLinksApp({
           {/* Recently Featured */}
           {!activeCategory && !activeOrg && (
             <RecentlyFeatured
-              links={links
-                .filter((l) => l.status === "live")
-                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                .slice(0, 8)}
+              links={(() => {
+                const live = links.filter((l) => l.status === "live");
+                const featured = live.filter((l) => l.featured).sort((a, b) => a.title.localeCompare(b.title));
+                const recent = live.filter((l) => !l.featured).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                return [...featured, ...recent].slice(0, 12);
+              })()}
               onCopy={handleCopyUrl}
             />
           )}

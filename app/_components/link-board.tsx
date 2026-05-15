@@ -20,11 +20,7 @@ import {
   Check,
   Copy,
   MoreHorizontal,
-  Share2,
-  Mail,
-  MessageCircle,
-  Send,
-  Phone,
+  Star,
   Info,
 } from "lucide-react";
 import type { LinkView, Organization } from "@/lib/types";
@@ -37,6 +33,7 @@ import {
   upsertLink,
   type UpsertLinkInput,
 } from "@/app/_actions/links";
+import { toggleFeatured } from "@/app/_actions/admin";
 
 const SUBTYPE_SUGGESTIONS = [
   "playbook", "pdf", "deck", "agreement", "app", "model",
@@ -131,6 +128,7 @@ export default function LinkBoard({
   };
 
   const handleToggle = (id: string) => runMutation(() => toggleLinkStatus(id));
+  const handleToggleFeatured = (id: string) => runMutation(() => toggleFeatured(id));
   const handleRemove = (id: string) => {
     if (!window.confirm("Permanently remove this link?")) return;
     runMutation(() => deleteLink(id));
@@ -233,6 +231,7 @@ export default function LinkBoard({
                 orgColor={color}
                 view={view}
                 onToggle={() => handleToggle(link.id)}
+                onToggleFeatured={() => handleToggleFeatured(link.id)}
                 onEdit={() => openEdit(link)}
                 onRemove={() => handleRemove(link.id)}
                 onCopy={onCopy}
@@ -347,6 +346,7 @@ function LinkRow({
   orgColor,
   view,
   onToggle,
+  onToggleFeatured,
   onEdit,
   onRemove,
   onCopy,
@@ -355,6 +355,7 @@ function LinkRow({
   orgColor: string;
   view: "live" | "archive";
   onToggle: () => void;
+  onToggleFeatured: () => void;
   onEdit: () => void;
   onRemove: () => void;
   onCopy: (url: string) => void;
@@ -417,6 +418,18 @@ function LinkRow({
 
       {/* Always-visible actions */}
       <div className="link-actions-v2">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onToggleFeatured();
+          }}
+          className="action-btn"
+          title={link.featured ? "Unfeature" : "Feature"}
+          style={link.featured ? { color: "var(--saffron)" } : undefined}
+        >
+          <Star size={15} fill={link.featured ? "var(--saffron)" : "none"} />
+        </button>
         <button
           onClick={(e) => {
             e.preventDefault();

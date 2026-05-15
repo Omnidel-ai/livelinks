@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, Copy, Sparkles } from "lucide-react";
+import { ExternalLink, Copy, Sparkles, Star } from "lucide-react";
 import type { LinkView } from "@/lib/types";
 import { ensureProtocol, formatDate, shortUrl } from "@/lib/format";
 
@@ -82,7 +82,10 @@ export default function RecentlyFeatured({ links, onCopy }: Props) {
             </div>
 
             <div style={{ flex: 1, marginBottom: 12 }}>
-              <h3 className="font-display" style={{ fontSize: 20, fontWeight: 700, color: "var(--ink)", lineHeight: 1.25, marginBottom: 4 }}>{link.title}</h3>
+              <h3 className="font-display" style={{ fontSize: 20, fontWeight: 700, color: "var(--ink)", lineHeight: 1.25, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>
+                {link.featured && <Star size={16} fill="var(--saffron)" color="var(--saffron)" style={{ flexShrink: 0 }} />}
+                {link.title}
+              </h3>
               <div style={{ fontSize: 13, color: "var(--ink-soft)", fontStyle: "italic", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {shortUrl(link.url)}
               </div>

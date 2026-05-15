@@ -7,7 +7,7 @@ import {
   Trash2,
   Check,
   X,
-  ArrowRight,
+  Star,
   Save,
 } from "lucide-react";
 import type { Organization, LinkView, Category } from "@/lib/types";
@@ -19,6 +19,7 @@ import {
   deleteCategory,
   reassignLink,
   updateLinkDetails,
+  toggleFeatured,
 } from "@/app/_actions/admin";
 
 type Props = {
@@ -430,6 +431,21 @@ function LinksAdmin({
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      className="action-btn"
+                      title={link.featured ? "Unfeature" : "Feature"}
+                      style={link.featured ? { color: "var(--saffron)" } : undefined}
+                      onClick={() => {
+                        startTransition(async () => {
+                          try {
+                            await toggleFeatured(link.id);
+                            toast.success(link.featured ? "Unfeatured" : "Featured!");
+                          } catch (e: any) { toast.error(e.message); }
+                        });
+                      }}
+                    >
+                      <Star size={15} fill={link.featured ? "var(--saffron)" : "none"} />
+                    </button>
                     <select
                       className="lll-input text-xs"
                       style={{ width: 150, padding: "4px 8px" }}

@@ -79,6 +79,22 @@ export async function bulkReassignLinks(linkIds: string[], categoryId: string) {
   revalidatePath("/");
 }
 
+export async function toggleFeatured(id: string) {
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("links")
+    .select("featured")
+    .eq("id", id)
+    .single();
+  if (!data) throw new Error("Link not found");
+  const { error } = await supabase
+    .from("links")
+    .update({ featured: !data.featured })
+    .eq("id", id);
+  if (error) throw error;
+  revalidatePath("/");
+}
+
 export async function updateLinkDetails(
   id: string,
   updates: { title?: string; url?: string; sub_type?: string; note?: string; description?: string },

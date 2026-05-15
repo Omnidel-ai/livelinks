@@ -26,6 +26,7 @@ export type LinkRow = {
   description: string | null;
   source_date: string | null;
   status: LinkStatus;
+  featured: boolean;
   created_at: string;
   updated_at: string;
   created_by: string | null;
@@ -43,6 +44,7 @@ export type LinkView = {
   description: string;
   sourceDate: string;
   status: LinkStatus;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
