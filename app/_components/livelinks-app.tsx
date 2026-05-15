@@ -176,7 +176,10 @@ export default function LiveLinksApp({
           {/* Recently Featured */}
           {!activeCategory && !activeOrg && (
             <RecentlyFeatured
-              links={links.filter((l) => l.status === "live").slice(0, 8)}
+              links={links
+                .filter((l) => l.status === "live")
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                .slice(0, 8)}
               onCopy={handleCopyUrl}
             />
           )}

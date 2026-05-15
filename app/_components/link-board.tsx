@@ -388,7 +388,9 @@ function LinkRow({
         <div className="link-meta-v2">
           <span className="truncate">{shortUrl(link.url)}</span>
           <span className="text-ink-faint">·</span>
-          <span className="shrink-0">{formatDate(link.updatedAt)}</span>
+          <span className="shrink-0 font-semibold" style={{ color: "var(--saffron)" }}>
+            {new Date(link.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+          </span>
         </div>
         {link.note && <div className="link-note-v2">{link.note}</div>}
         {link.description && (

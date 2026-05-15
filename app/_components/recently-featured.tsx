@@ -92,8 +92,8 @@ export default function RecentlyFeatured({ links, onCopy }: Props) {
             </div>
 
             <div className="featured-card-footer">
-              <span className="featured-card-date">
-                {formatDate(link.updatedAt || link.createdAt)}
+              <span style={{ fontSize: 13, color: "var(--saffron)", fontWeight: 600, fontFamily: "var(--font-newsreader), serif" }}>
+                {new Date(link.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
               </span>
               <div className="featured-card-actions">
                 <button
