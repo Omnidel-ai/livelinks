@@ -217,7 +217,7 @@ export default function LinkBoard({
             ) : (
               <ChevronDown size={13} className="text-ink-faint" />
             )}
-            <h3 className="font-display text-lg text-ink">{cat}</h3>
+            <h3 className="font-display text-xl text-ink font-semibold">{cat}</h3>
             <span className="text-xs text-ink-faint font-body">
               {items.length} link{items.length !== 1 ? "s" : ""}
             </span>

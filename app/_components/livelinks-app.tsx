@@ -5,6 +5,7 @@ import type { LinkView, Organization, VercelDeployment } from "@/lib/types";
 import Sidebar from "./sidebar";
 import CommandPalette from "./command-palette";
 import RecentlyDeployed from "./recently-deployed";
+import RecentlyFeatured from "./recently-featured";
 import LinkBoard from "./link-board";
 import SayaniChat from "./sayani-chat";
 import { Toaster, toast } from "sonner";
@@ -170,6 +171,14 @@ export default function LiveLinksApp({
             >
               ← Show all
             </button>
+          )}
+
+          {/* Recently Featured */}
+          {!activeCategory && !activeOrg && (
+            <RecentlyFeatured
+              links={links.filter((l) => l.status === "live").slice(0, 8)}
+              onCopy={handleCopyUrl}
+            />
           )}
 
           {/* Recently Deployed */}
