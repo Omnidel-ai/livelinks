@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import type { LinkView, Organization, VercelDeployment } from "@/lib/types";
+import type { Category, LinkView, Organization, VercelDeployment } from "@/lib/types";
 import Sidebar from "./sidebar";
 import CommandPalette from "./command-palette";
 import RecentlyDeployed from "./recently-deployed";
 import RecentlyFeatured from "./recently-featured";
 import LinkBoard from "./link-board";
 import SayaniChat from "./sayani-chat";
+import AdminPanel from "./admin-panel";
 import { Toaster, toast } from "sonner";
 import {
   Plus,
@@ -15,11 +16,13 @@ import {
   Check,
   Menu,
   X,
+  Settings,
 } from "lucide-react";
 
 type Props = {
   organizations: Organization[];
   categories: string[];
+  rawCategories: Category[];
   categoryOrgs: Record<string, string>;
   links: LinkView[];
   deployments: VercelDeployment[];
@@ -28,12 +31,14 @@ type Props = {
 export default function LiveLinksApp({
   organizations,
   categories,
+  rawCategories,
   categoryOrgs,
   links,
   deployments,
 }: Props) {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeOrg, setActiveOrg] = useState<string | null>(null);
 
@@ -131,16 +136,25 @@ export default function LiveLinksApp({
             <kbd className="lll-kbd">⌘K</kbd>
           </button>
 
-          <button
-            onClick={() => {
-              const event = new CustomEvent("lll:open-add-modal");
-              window.dispatchEvent(event);
-            }}
-            className="lll-btn-primary inline-flex items-center gap-2 text-sm"
-          >
-            <Plus size={14} strokeWidth={2.5} />
-            <span className="hidden sm:inline">Add link</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setAdminOpen(true)}
+              className="action-btn"
+              title="Admin"
+            >
+              <Settings size={18} />
+            </button>
+            <button
+              onClick={() => {
+                const event = new CustomEvent("lll:open-add-modal");
+                window.dispatchEvent(event);
+              }}
+              className="lll-btn-primary inline-flex items-center gap-2 text-sm"
+            >
+              <Plus size={14} strokeWidth={2.5} />
+              <span className="hidden sm:inline">Add link</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -220,6 +234,14 @@ export default function LiveLinksApp({
           },
         }}
       />
+      {adminOpen && (
+        <AdminPanel
+          organizations={organizations}
+          categories={rawCategories}
+          links={links}
+          onClose={() => setAdminOpen(false)}
+        />
+      )}
       {paletteOpen && (
         <CommandPalette
           links={links}

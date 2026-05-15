@@ -75,6 +75,7 @@ export default async function Home() {
     <LiveLinksApp
       organizations={organizations}
       categories={categoryNames}
+      rawCategories={categories}
       categoryOrgs={Object.fromEntries(
         categories
           .filter((c) => c.org_id)
