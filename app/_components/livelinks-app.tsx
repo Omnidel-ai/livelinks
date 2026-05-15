@@ -41,6 +41,7 @@ export default function LiveLinksApp({
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
+  const [view, setView] = useState<"live" | "archive">("live");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeOrg, setActiveOrg] = useState<string | null>(null);
 
@@ -180,17 +181,34 @@ export default function LiveLinksApp({
 
         {/* ── MAIN CONTENT ── */}
         <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 py-6 lg:ml-[220px]">
-          {(activeCategory || activeOrg) && (
+          {/* View tabs — always at top */}
+          <div className="flex items-center gap-6 mb-6 font-body flex-wrap">
             <button
-              onClick={handleShowAll}
-              className="lll-btn-secondary text-xs mb-4 inline-flex items-center gap-1"
+              onClick={() => setView("live")}
+              className={`tab-btn ${view === "live" ? "tab-active" : ""}`}
             >
-              ← Show all
+              Link Board
+              <span className="tab-count">{liveCount}</span>
             </button>
-          )}
+            <button
+              onClick={() => setView("archive")}
+              className={`tab-btn ${view === "archive" ? "tab-active" : ""}`}
+            >
+              Archives
+              <span className="tab-count">{archiveCount}</span>
+            </button>
+            {(activeCategory || activeOrg) && (
+              <button
+                onClick={handleShowAll}
+                className="lll-btn-secondary text-xs inline-flex items-center gap-1 ml-auto"
+              >
+                ← Show all
+              </button>
+            )}
+          </div>
 
-          {/* Recently Featured */}
-          {!activeCategory && !activeOrg && (
+          {/* Recently Featured — only on live view */}
+          {view === "live" && !activeCategory && !activeOrg && (
             <RecentlyFeatured
               links={(() => {
                 const live = links.filter((l) => l.status === "live");
@@ -228,6 +246,7 @@ export default function LiveLinksApp({
             categories={categories}
             categoryOrgs={categoryOrgs}
             links={links}
+            view={view}
             activeCategory={activeCategory}
             activeOrg={activeOrg}
             onCopy={handleCopyUrl}

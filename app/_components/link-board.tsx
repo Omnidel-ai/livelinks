@@ -51,6 +51,7 @@ type Props = {
   categories: string[];
   categoryOrgs: Record<string, string>;
   links: LinkView[];
+  view: "live" | "archive";
   activeCategory: string | null;
   activeOrg: string | null;
   onCopy: (url: string) => void;
@@ -61,11 +62,11 @@ export default function LinkBoard({
   categories,
   categoryOrgs,
   links,
+  view,
   activeCategory,
   activeOrg,
   onCopy,
 }: Props) {
-  const [view, setView] = useState<"live" | "archive">("live");
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<LinkView | null>(null);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
@@ -266,34 +267,15 @@ export default function LinkBoard({
 
   return (
     <>
-      {/* Tabs + status */}
-      <div className="flex items-center gap-6 mb-6 font-body flex-wrap">
-        <button
-          onClick={() => setView("live")}
-          className={`tab-btn ${view === "live" ? "tab-active" : ""}`}
-        >
-          Link Board
-          <span className="tab-count">{liveCount}</span>
-        </button>
-        <button
-          onClick={() => setView("archive")}
-          className={`tab-btn ${view === "archive" ? "tab-active" : ""}`}
-        >
-          Archives
-          <span className="tab-count">{archiveCount}</span>
-        </button>
-        <div className="ml-auto text-xs text-ink-soft font-body italic">
-          {isPending ? (
-            "saving…"
-          ) : savedFlash ? (
-            <span className="inline-flex items-center gap-1 text-saffron">
-              <Check size={12} /> saved
-            </span>
-          ) : (
-            "auto-saves"
-          )}
+      {/* Save status */}
+      {isPending && (
+        <div className="text-xs text-ink-soft font-body italic mb-4">saving…</div>
+      )}
+      {!isPending && savedFlash && (
+        <div className="text-xs text-saffron font-body italic mb-4 inline-flex items-center gap-1">
+          <Check size={12} /> saved
         </div>
-      </div>
+      )}
 
       {/* Org sections */}
       <div className="space-y-8">
