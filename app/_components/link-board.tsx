@@ -75,12 +75,21 @@ export default function LinkBoard({
   const justSavedRef = useRef(false);
 
   useEffect(() => {
-    const handler = () => {
+    const handleAdd = () => {
       setEditing(null);
       setModalOpen(true);
     };
-    window.addEventListener("lll:open-add-modal", handler);
-    return () => window.removeEventListener("lll:open-add-modal", handler);
+    const handleEdit = (e: Event) => {
+      const link = (e as CustomEvent).detail as LinkView;
+      setEditing(link);
+      setModalOpen(true);
+    };
+    window.addEventListener("lll:open-add-modal", handleAdd);
+    window.addEventListener("lll:open-edit-modal", handleEdit);
+    return () => {
+      window.removeEventListener("lll:open-add-modal", handleAdd);
+      window.removeEventListener("lll:open-edit-modal", handleEdit);
+    };
   }, []);
 
   useEffect(() => {

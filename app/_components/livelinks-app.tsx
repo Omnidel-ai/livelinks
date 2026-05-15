@@ -18,6 +18,8 @@ import {
   X,
   Settings,
 } from "lucide-react";
+import { toggleLinkStatus, deleteLink } from "@/app/_actions/links";
+import { toggleFeatured } from "@/app/_actions/admin";
 
 type Props = {
   organizations: Organization[];
@@ -197,6 +199,15 @@ export default function LiveLinksApp({
                 return [...featured, ...recent].slice(0, 12);
               })()}
               onCopy={handleCopyUrl}
+              onToggleFeatured={(id) => { toggleFeatured(id); }}
+              onArchive={(id) => { toggleLinkStatus(id); }}
+              onEdit={(link) => {
+                const event = new CustomEvent("lll:open-edit-modal", { detail: link });
+                window.dispatchEvent(event);
+              }}
+              onRemove={(id) => {
+                if (window.confirm("Permanently remove this link?")) deleteLink(id);
+              }}
             />
           )}
 
