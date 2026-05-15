@@ -11,8 +11,9 @@ function detectOrg(projectName: string): string {
   return "uncategorised";
 }
 
-async function fetchVercelDeployments(token: string, since: number) {
-  const url = `https://api.vercel.com/v6/deployments?since=${since}&state=READY&limit=50`;
+async function fetchVercelDeployments(token: string, since: number, teamId?: string) {
+  let url = `https://api.vercel.com/v6/deployments?since=${since}&state=READY&limit=50`;
+  if (teamId) url += `&teamId=${teamId}`;
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -69,6 +70,7 @@ export async function GET(request: NextRequest) {
   const supabase = createAdminClient();
 
   const tokens: string[] = [];
+  if (process.env.VERCEL_TOKEN) tokens.push(process.env.VERCEL_TOKEN);
   if (process.env.VERCEL_API_TOKEN) tokens.push(process.env.VERCEL_API_TOKEN);
   if (process.env.VERCEL_API_TOKEN_TEAM) tokens.push(process.env.VERCEL_API_TOKEN_TEAM);
 
@@ -79,9 +81,14 @@ export async function GET(request: NextRequest) {
   const since = Date.now() - 24 * 60 * 60 * 1000;
   const allDeployments: Array<Record<string, unknown>> = [];
 
+  const teamId = process.env.VERCEL_TEAM_ID;
   for (const token of tokens) {
-    const deps = await fetchVercelDeployments(token, since);
-    allDeployments.push(...deps);
+    const personalDeps = await fetchVercelDeployments(token, since);
+    allDeployments.push(...personalDeps);
+    if (teamId) {
+      const teamDeps = await fetchVercelDeployments(token, since, teamId);
+      allDeployments.push(...teamDeps);
+    }
   }
 
   const seen = new Set<string>();
